@@ -20,6 +20,7 @@ function startOfLocalDay(d: Date) {
   return x;
 }
 
+/** YYYY-MM-DD in local timezone (matches how users think about "today"). */
 function localDateKey(d: Date) {
   const y = d.getFullYear();
   const m = String(d.getMonth() + 1).padStart(2, '0');
@@ -34,6 +35,7 @@ function logLocalDateKey(logged_at: string | undefined | null) {
   return localDateKey(d);
 }
 
+/** Seven columns: oldest → today, each labeled with the real weekday. */
 function buildWeeklyMoodPoints(history: any[]) {
   const todayStart = startOfLocalDay(new Date());
   const todayKey = localDateKey(todayStart);
@@ -138,7 +140,7 @@ function buildPositiveInsight(history: any[], stats: ReturnType<typeof calcStats
 }
 
 function buildWatchInsight(recentEmotion: string, recentRisk: string) {
-  return `Your latest mood entry shows ${recentEmotion} with ${recentRisk} risk. Consider trying a breathing exercise or talking to the assistant.`;
+  return `Your latest mood entry shows ${recentEmotion} with ${recentRisk} risk. Consider trying a breathing exercise or talking to our AI assistant.`;
 }
 
 export default function ReportScreen() {
@@ -180,6 +182,7 @@ export default function ReportScreen() {
       <StatusBar barStyle="dark-content" backgroundColor="#F2F4F8" />
       <ScrollView showsVerticalScrollIndicator={false}>
 
+        {/* ── Header ── */}
         <View style={{ paddingHorizontal: 20, paddingTop: 16, paddingBottom: 8 }}>
           <Text style={{ fontSize: 22, fontWeight: '800', color: NAVY }}>Mental Health Report</Text>
           <Text style={{ fontSize: 14, color: '#6B7280', marginTop: 4 }}>
@@ -204,6 +207,7 @@ export default function ReportScreen() {
           </View>
         ) : (
           <>
+            {/* ── 2×2 Mood stat cards ── */}
             <View style={{
               flexDirection: 'row', flexWrap: 'wrap',
               justifyContent: 'space-between', paddingHorizontal: 16, marginTop: 4,
@@ -214,6 +218,7 @@ export default function ReportScreen() {
               <MoodStatCard label="Sad" pct={stats.sad} color="#EF4444" trend="↓" icon="😢" />
             </View>
 
+            {/* ── Weekly mood chart ── */}
             <View style={{
               marginHorizontal: 16, marginBottom: 12,
               backgroundColor: 'white', borderRadius: 16, padding: 16,
@@ -226,12 +231,13 @@ export default function ReportScreen() {
               <WeeklyChart points={weeklyPoints} />
             </View>
 
+            {/* ── AI insight cards ── */}
             <View style={{
               marginHorizontal: 16, marginBottom: 12,
               backgroundColor: '#EEF2FF', borderRadius: 16, padding: 16,
             }}>
               <Text style={{ fontSize: 13, fontWeight: '700', color: PRIMARY, marginBottom: 4 }}>
-                Wellness Insight — Positive
+                🤖 AI Insight — Positive
               </Text>
               <Text style={{ fontSize: 13, color: '#374151', lineHeight: 20 }}>
                 {buildPositiveInsight(history, stats)}
@@ -244,7 +250,7 @@ export default function ReportScreen() {
                 backgroundColor: '#FEF3C7', borderRadius: 16, padding: 16,
               }}>
                 <Text style={{ fontSize: 13, fontWeight: '700', color: '#D97706', marginBottom: 4 }}>
-                  Wellness Insight — Watch Out
+                  ⚠️ AI Insight — Watch Out
                 </Text>
                 <Text style={{ fontSize: 13, color: '#374151', lineHeight: 20 }}>
                   {buildWatchInsight(recentEmotion, recentRisk)}
@@ -252,6 +258,7 @@ export default function ReportScreen() {
               </View>
             )}
 
+            {/* ── Summary ── */}
             <View style={{
               marginHorizontal: 16, marginBottom: 24,
               backgroundColor: NAVY, borderRadius: 16, padding: 16,

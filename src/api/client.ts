@@ -71,6 +71,7 @@ export async function apiRequest<T>({
     return res.data;
   } catch (e: unknown) {
     const err = e as { response?: { status?: number } };
+    // Expired / invalid JWT: backend returns 401. Only act when we actually sent a Bearer token.
     if (err?.response?.status === 401 && token) {
       await clearToken();
       resetToLogin();

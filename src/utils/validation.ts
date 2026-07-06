@@ -1,3 +1,4 @@
+/** Basic email syntax check — not OTP / inbox verification. */
 export function isValidEmail(email: string): boolean {
   const trimmed = email.trim();
   if (!trimmed || trimmed.length > 254) return false;

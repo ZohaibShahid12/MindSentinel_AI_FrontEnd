@@ -1,3 +1,6 @@
+/**
+ * Normalize FastAPI / axios error payloads into a single user-facing string.
+ */
 export function apiErrorMessage(e: unknown): string {
   if (!e || typeof e !== 'object') return 'Something went wrong';
   const any = e as any;

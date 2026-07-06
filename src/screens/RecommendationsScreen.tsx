@@ -21,7 +21,9 @@ type ActionItem = {
   subtitle: string;
   color: string;
   iconBg: string;
+  /** Same tab navigator as Recs (e.g. Chat). */
   navigate?: string;
+  /** Root stack screen pushed above MainTabs. */
   stackRoute?: string;
   phone?: string;
 };
