@@ -34,8 +34,11 @@ local.properties
 *.keystore
 !debug.keystore
 .kotlin/
+hs_err_pid*.log
 
-# node.js
+.env
+.env.local
+
 #
 node_modules/
 npm-debug.log
